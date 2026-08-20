@@ -1,0 +1,28 @@
+{
+  "factory": {
+    "properties": {
+      "globalParameters": {
+        "environment": {
+          "type": "string",
+          "value": "dev"
+        },
+        "rawContainer": {
+          "type": "string",
+          "value": "raw"
+        },
+        "curatedContainer": {
+          "type": "string",
+          "value": "curated"
+        },
+        "quarantineContainer": {
+          "type": "string",
+          "value": "quarantine"
+        },
+        "keyVaultBaseUrl": {
+          "type": "string",
+          "value": "https://<key-vault-name>.vault.azure.net/"
+        }
+      }
+    }
+  }
+}

@@ -61,14 +61,17 @@ Power BI semantic model and dashboards
 
 ```text
 adf/                  Azure Data Factory linked services, datasets, and pipeline JSON
+azure-devops/         Azure DevOps CI/CD sample
 config/               API source definitions and expected schemas
 docs/                 Architecture and operational runbook
+infra/                Azure Bicep infrastructure-as-code
+monitoring/           Log Analytics KQL queries
 powerbi/              Power BI model notes and dashboard measure definitions
 sample_data/          Small demo datasets for portfolio walkthroughs
 src/ingestion/        REST API extraction and ADLS landing logic
 src/pyspark/          Bronze-to-silver transformation jobs
 src/quality/          Schema validation utilities
-synapse/sql/          DDL, external tables, and reporting views
+synapse/              Synapse SQL scripts and notebook metadata
 tests/                Unit tests for schema and cursor logic
 ```
 
@@ -159,11 +162,20 @@ http://127.0.0.1:8000/zendesk/tickets?page=1&page_size=2
 
 ## Azure Deployment Notes
 
-1. Create ADLS Gen2 containers: `raw`, `curated`, and `quarantine`.
-2. Import files under `adf/` into Azure Data Factory or publish through ARM/Bicep in your preferred release process.
-3. Upload Python/PySpark jobs under `src/` to Synapse Spark or package them in a CI artifact.
-4. Run `synapse/sql/01_create_external_objects.sql` and `synapse/sql/02_reporting_views.sql` in a dedicated SQL pool or serverless SQL endpoint.
-5. Connect Power BI to the Synapse reporting views.
+Deploy Azure resources with Bicep:
+
+```powershell
+az login
+.\scripts\deploy_azure.ps1
+```
+
+Then:
+
+1. Import files under `adf/` into Azure Data Factory or publish through your release process.
+2. Upload Python/PySpark jobs under `src/` to Synapse Spark.
+3. Run `synapse/sql/01_create_external_objects.sql` and `synapse/sql/02_reporting_views.sql` in Synapse SQL.
+4. Connect Power BI to the Synapse reporting views.
+5. Use KQL queries under `monitoring/` for operational tracking.
 
 ## Dashboard KPIs
 
@@ -185,6 +197,7 @@ http://127.0.0.1:8000/zendesk/tickets?page=1&page_size=2
 ## Project Documents
 
 - [Architecture](docs/architecture.md)
+- [Azure Platform](docs/azure-platform.md)
 - [Data Contracts](docs/data-contracts.md)
 - [Local Demo Walkthrough](docs/demo-walkthrough.md)
 - [Portfolio Case Study](docs/portfolio-case-study.md)

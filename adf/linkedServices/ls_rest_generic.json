@@ -1,0 +1,14 @@
+{
+  "name": "ls_rest_generic",
+  "properties": {
+    "type": "RestService",
+    "typeProperties": {
+      "url": "https://api.vendor.example",
+      "enableServerCertificateValidation": true,
+      "authenticationType": "Anonymous"
+    },
+    "annotations": [
+      "Replace anonymous auth with Key Vault-backed token for each SaaS source in production."
+    ]
+  }
+}

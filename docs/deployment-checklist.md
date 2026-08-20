@@ -2,19 +2,23 @@
 
 ## Azure Resources
 
-- Resource group created.
-- ADLS Gen2 account created with hierarchical namespace enabled.
+- Resource group created through `scripts/deploy_azure.ps1`.
+- ADLS Gen2 account created with hierarchical namespace enabled by `infra/main.bicep`.
 - Containers created: `raw`, `curated`, `quarantine`.
-- Azure Data Factory created.
+- Azure Data Factory created with system-assigned managed identity.
 - Azure Synapse workspace created.
 - Key Vault created for API credentials.
-- Managed identities assigned.
+- Log Analytics workspace created.
+- ADF diagnostic settings enabled.
+- Managed identities assigned RBAC access to ADLS and Key Vault.
 
 ## Data Factory
 
 - Import linked services from `adf/linkedServices`.
 - Import datasets from `adf/datasets`.
 - Import pipeline from `adf/pipelines`.
+- Import trigger from `adf/triggers`.
+- Configure global parameters from `adf/globalParameters`.
 - Replace placeholder endpoint, storage, and Synapse values.
 - Configure Key Vault-backed secrets for SaaS API tokens.
 - Add tumbling-window or scheduled triggers.
@@ -42,3 +46,4 @@
 - Confirm quarantine folder behavior.
 - Confirm Power BI refresh completes.
 - Confirm stakeholder KPIs match expected source totals.
+- Confirm Log Analytics receives ADF pipeline and activity logs.

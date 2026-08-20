@@ -1,0 +1,11 @@
+ADFActivityRun
+| where Status == "Failed"
+| project
+    TimeGenerated,
+    PipelineName,
+    ActivityName,
+    ActivityType,
+    ErrorMessage,
+    Input,
+    Output
+| order by TimeGenerated desc

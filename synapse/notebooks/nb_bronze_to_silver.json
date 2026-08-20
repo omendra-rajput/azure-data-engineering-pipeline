@@ -1,0 +1,31 @@
+{
+  "name": "nb_bronze_to_silver",
+  "properties": {
+    "description": "Synapse notebook wrapper for the PySpark bronze-to-silver job.",
+    "bigDataPool": {
+      "referenceName": "sparkpool01",
+      "type": "BigDataPoolReference"
+    },
+    "metadata": {
+      "language_info": {
+        "name": "python"
+      },
+      "a365ComputeOptions": {
+        "id": "/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.Synapse/workspaces/<workspace>/bigDataPools/sparkpool01",
+        "name": "sparkpool01",
+        "type": "Spark"
+      }
+    },
+    "cells": [
+      {
+        "cell_type": "code",
+        "source": [
+          "source_name = mssparkutils.env.getJobTag('sourceName') or 'salesforce_accounts'\\n",
+          "raw_path = f'abfss://raw@<storage-account>.dfs.core.windows.net/{source_name}/'\\n",
+          "silver_path = 'abfss://curated@<storage-account>.dfs.core.windows.net/silver'\\n",
+          "%run /jobs/bronze_to_silver"
+        ]
+      }
+    ]
+  }
+}

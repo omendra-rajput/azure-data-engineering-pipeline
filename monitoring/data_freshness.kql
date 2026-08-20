@@ -1,0 +1,5 @@
+ADFActivityRun
+| where ActivityName has "Copy_Rest_To_Raw_ADLS"
+| summarize LastSuccessfulLoad = max(TimeGenerated) by PipelineName, Status
+| extend FreshnessMinutes = datetime_diff("minute", now(), LastSuccessfulLoad)
+| order by FreshnessMinutes desc

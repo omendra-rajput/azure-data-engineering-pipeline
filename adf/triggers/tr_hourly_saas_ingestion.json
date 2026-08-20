@@ -1,0 +1,27 @@
+{
+  "name": "tr_hourly_saas_ingestion",
+  "properties": {
+    "type": "ScheduleTrigger",
+    "typeProperties": {
+      "recurrence": {
+        "frequency": "Hour",
+        "interval": 1,
+        "startTime": "2026-08-20T00:00:00Z",
+        "timeZone": "UTC"
+      }
+    },
+    "pipelines": [
+      {
+        "pipelineReference": {
+          "referenceName": "pl_saas_incremental_ingestion",
+          "type": "PipelineReference"
+        },
+        "parameters": {
+          "sourceName": "salesforce_accounts",
+          "relativeUrl": "/salesforce/accounts",
+          "incrementalCursor": "@utcNow()"
+        }
+      }
+    ]
+  }
+}

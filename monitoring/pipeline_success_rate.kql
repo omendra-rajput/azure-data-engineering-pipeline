@@ -1,0 +1,8 @@
+ADFPipelineRun
+| summarize
+    TotalRuns = count(),
+    FailedRuns = countif(Status == "Failed"),
+    SucceededRuns = countif(Status == "Succeeded")
+    by bin(TimeGenerated, 1d), PipelineName
+| extend SuccessRate = todouble(SucceededRuns) / todouble(TotalRuns)
+| order by TimeGenerated desc
