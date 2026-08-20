@@ -74,6 +74,57 @@ tests/                Unit tests for schema and cursor logic
 
 ## Local Quick Start
 
+### One-Command Demo
+
+Run the complete local demo from PowerShell:
+
+```powershell
+.\scripts\run_demo.ps1
+```
+
+This starts a local mock SaaS API server, extracts data from 8 dummy REST endpoints, writes raw JSONL files, validates schemas, creates curated datasets, builds reporting CSVs, generates a dashboard, opens it in your browser, and then stops the API server.
+
+Generated demo outputs:
+
+```text
+data/raw/                 API landing files partitioned by source and load date
+data/curated/             Validated source datasets
+data/quarantine/          Invalid records, if schema validation fails
+data/reporting/           Customer health and pipeline metrics reporting outputs
+data/reporting/dashboard.html
+```
+
+### Manual Demo
+
+Start the mock SaaS APIs:
+
+```powershell
+.\scripts\start_mock_api.ps1
+```
+
+In another terminal, run the pipeline:
+
+```powershell
+python -m src.demo.run_local_pipeline
+```
+
+Open:
+
+```text
+data/reporting/dashboard.html
+```
+
+Mock API examples:
+
+```text
+http://127.0.0.1:8000/health
+http://127.0.0.1:8000/salesforce/accounts?page=1&page_size=2
+http://127.0.0.1:8000/stripe/charges?page=1&page_size=2
+http://127.0.0.1:8000/zendesk/tickets?page=1&page_size=2
+```
+
+### Development Setup
+
 1. Create a virtual environment.
 
    ```bash
@@ -135,6 +186,7 @@ tests/                Unit tests for schema and cursor logic
 
 - [Architecture](docs/architecture.md)
 - [Data Contracts](docs/data-contracts.md)
+- [Local Demo Walkthrough](docs/demo-walkthrough.md)
 - [Portfolio Case Study](docs/portfolio-case-study.md)
 - [Operations Runbook](docs/runbook.md)
 - [Power BI Model](powerbi/README.md)

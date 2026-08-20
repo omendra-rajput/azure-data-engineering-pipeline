@@ -41,9 +41,11 @@ Build a cloud data pipeline that ingests data from 8+ SaaS REST APIs, validates 
 ## Interview Walkthrough
 
 1. Start with the architecture diagram in `README.md`.
-2. Explain the source metadata in `config/sources.yml`.
-3. Show cursor handling in `src/ingestion/cursor_store.py`.
-4. Show schema checks in `src/quality/schema_validator.py`.
-5. Show PySpark standardization in `src/pyspark/bronze_to_silver.py`.
-6. Show Synapse views in `synapse/sql/02_reporting_views.sql`.
-7. End with the KPI impact table above.
+2. Run `.\scripts\run_demo.ps1` to show the working local pipeline.
+3. Open `data/reporting/dashboard.html` and explain the customer health output.
+4. Explain the source metadata in `config/demo_sources.json`.
+5. Show cursor handling in `src/ingestion/cursor_store.py`.
+6. Show schema checks in `src/quality/schema_validator.py`.
+7. Show PySpark standardization in `src/pyspark/bronze_to_silver.py`.
+8. Show Synapse views in `synapse/sql/02_reporting_views.sql`.
+9. End with the KPI impact table above.

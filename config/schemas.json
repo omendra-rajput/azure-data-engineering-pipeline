@@ -32,5 +32,41 @@
       "status": "string",
       "updated_at": "timestamp"
     }
+  },
+  "jira_issues": {
+    "required": ["id", "key", "status", "updated"],
+    "types": {
+      "id": "string",
+      "key": "string",
+      "status": "string",
+      "updated": "timestamp"
+    }
+  },
+  "shopify_orders": {
+    "required": ["id", "customer_id", "total_price", "updated_at"],
+    "types": {
+      "id": "integer",
+      "customer_id": "string",
+      "total_price": "string",
+      "updated_at": "timestamp"
+    }
+  },
+  "netsuite_invoices": {
+    "required": ["internalId", "customer_id", "amountDue", "lastModifiedDate"],
+    "types": {
+      "internalId": "string",
+      "customer_id": "string",
+      "amountDue": "integer",
+      "lastModifiedDate": "timestamp"
+    }
+  },
+  "google_analytics_events": {
+    "required": ["eventId", "customer_id", "eventName", "eventDate"],
+    "types": {
+      "eventId": "string",
+      "customer_id": "string",
+      "eventName": "string",
+      "eventDate": "timestamp"
+    }
   }
 }

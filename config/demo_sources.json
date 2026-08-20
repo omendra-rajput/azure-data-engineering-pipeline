@@ -1,0 +1,53 @@
+{
+  "base_url": "http://127.0.0.1:8000",
+  "sources": [
+    {
+      "name": "salesforce_accounts",
+      "path": "/salesforce/accounts",
+      "incremental_field": "LastModifiedDate",
+      "primary_key": "Id"
+    },
+    {
+      "name": "hubspot_contacts",
+      "path": "/hubspot/contacts",
+      "incremental_field": "updatedAt",
+      "primary_key": "id"
+    },
+    {
+      "name": "stripe_charges",
+      "path": "/stripe/charges",
+      "incremental_field": "created",
+      "primary_key": "id"
+    },
+    {
+      "name": "zendesk_tickets",
+      "path": "/zendesk/tickets",
+      "incremental_field": "updated_at",
+      "primary_key": "id"
+    },
+    {
+      "name": "jira_issues",
+      "path": "/jira/issues",
+      "incremental_field": "updated",
+      "primary_key": "id"
+    },
+    {
+      "name": "shopify_orders",
+      "path": "/shopify/orders",
+      "incremental_field": "updated_at",
+      "primary_key": "id"
+    },
+    {
+      "name": "netsuite_invoices",
+      "path": "/netsuite/invoices",
+      "incremental_field": "lastModifiedDate",
+      "primary_key": "internalId"
+    },
+    {
+      "name": "google_analytics_events",
+      "path": "/google-analytics/events",
+      "incremental_field": "eventDate",
+      "primary_key": "eventId"
+    }
+  ]
+}
