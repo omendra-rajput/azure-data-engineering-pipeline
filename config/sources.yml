@@ -1,0 +1,49 @@
+sources:
+  - name: salesforce_accounts
+    system: salesforce
+    endpoint: https://example.salesforce.com/services/data/v58.0/query
+    incremental_field: LastModifiedDate
+    primary_key: Id
+    schedule: hourly
+  - name: hubspot_contacts
+    system: hubspot
+    endpoint: https://api.hubapi.com/crm/v3/objects/contacts
+    incremental_field: updatedAt
+    primary_key: id
+    schedule: hourly
+  - name: stripe_charges
+    system: stripe
+    endpoint: https://api.stripe.com/v1/charges
+    incremental_field: created
+    primary_key: id
+    schedule: hourly
+  - name: zendesk_tickets
+    system: zendesk
+    endpoint: https://example.zendesk.com/api/v2/incremental/tickets
+    incremental_field: updated_at
+    primary_key: id
+    schedule: hourly
+  - name: jira_issues
+    system: jira
+    endpoint: https://example.atlassian.net/rest/api/3/search
+    incremental_field: updated
+    primary_key: id
+    schedule: daily
+  - name: shopify_orders
+    system: shopify
+    endpoint: https://example.myshopify.com/admin/api/2024-07/orders.json
+    incremental_field: updated_at
+    primary_key: id
+    schedule: hourly
+  - name: netsuite_invoices
+    system: netsuite
+    endpoint: https://example.restlets.api.netsuite.com/app/site/hosting/restlet.nl
+    incremental_field: lastModifiedDate
+    primary_key: internalId
+    schedule: daily
+  - name: google_analytics_events
+    system: google_analytics
+    endpoint: https://analyticsdata.googleapis.com/v1beta/properties/123:runReport
+    incremental_field: eventDate
+    primary_key: eventId
+    schedule: daily

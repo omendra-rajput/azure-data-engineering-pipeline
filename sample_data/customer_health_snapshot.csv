@@ -1,0 +1,6 @@
+customer_id,customer_name,lifetime_revenue,ticket_count,last_ticket_at,health_status
+CUST-1001,Northwind Analytics,245000,2,2026-08-19T10:14:00Z,Healthy
+CUST-1002,Contoso Retail,87000,8,2026-08-20T08:30:00Z,Watch
+CUST-1003,Fabrikam Cloud,310000,12,2026-08-20T11:05:00Z,High Risk
+CUST-1004,Adventure Works,142000,1,2026-08-17T15:45:00Z,Healthy
+CUST-1005,Blue Yonder Labs,99000,6,2026-08-18T09:20:00Z,Watch

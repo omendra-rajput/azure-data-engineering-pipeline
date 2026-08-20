@@ -1,0 +1,36 @@
+{
+  "salesforce_accounts": {
+    "required": ["Id", "Name", "LastModifiedDate"],
+    "types": {
+      "Id": "string",
+      "Name": "string",
+      "LastModifiedDate": "timestamp"
+    }
+  },
+  "hubspot_contacts": {
+    "required": ["id", "properties", "updatedAt"],
+    "types": {
+      "id": "string",
+      "properties": "object",
+      "updatedAt": "timestamp"
+    }
+  },
+  "stripe_charges": {
+    "required": ["id", "amount", "currency", "created"],
+    "types": {
+      "id": "string",
+      "amount": "integer",
+      "currency": "string",
+      "created": "integer"
+    }
+  },
+  "zendesk_tickets": {
+    "required": ["id", "subject", "status", "updated_at"],
+    "types": {
+      "id": "integer",
+      "subject": "string",
+      "status": "string",
+      "updated_at": "timestamp"
+    }
+  }
+}

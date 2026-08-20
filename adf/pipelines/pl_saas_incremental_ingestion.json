@@ -1,0 +1,104 @@
+{
+  "name": "pl_saas_incremental_ingestion",
+  "properties": {
+    "description": "Metadata-driven incremental ingestion pipeline for SaaS REST APIs.",
+    "parameters": {
+      "sourceName": {
+        "type": "string"
+      },
+      "relativeUrl": {
+        "type": "string"
+      },
+      "incrementalCursor": {
+        "type": "string"
+      }
+    },
+    "activities": [
+      {
+        "name": "Copy_Rest_To_Raw_ADLS",
+        "type": "Copy",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.02:00:00",
+          "retry": 3,
+          "retryIntervalInSeconds": 60
+        },
+        "typeProperties": {
+          "source": {
+            "type": "RestSource",
+            "requestMethod": "GET",
+            "paginationRules": {
+              "AbsoluteUrl": "$.next"
+            }
+          },
+          "sink": {
+            "type": "JsonSink",
+            "storeSettings": {
+              "type": "AzureBlobFSWriteSettings"
+            }
+          },
+          "enableStaging": false
+        },
+        "inputs": [
+          {
+            "referenceName": "ds_rest_api",
+            "type": "DatasetReference",
+            "parameters": {
+              "relativeUrl": "@pipeline().parameters.relativeUrl"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "referenceName": "ds_adls_json",
+            "type": "DatasetReference",
+            "parameters": {
+              "container": "raw",
+              "folderPath": "@concat(pipeline().parameters.sourceName, '/load_date=', formatDateTime(utcNow(), 'yyyy-MM-dd'))"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Run_Schema_Validation",
+        "type": "AzureFunctionActivity",
+        "dependsOn": [
+          {
+            "activity": "Copy_Rest_To_Raw_ADLS",
+            "dependencyConditions": ["Succeeded"]
+          }
+        ],
+        "typeProperties": {
+          "functionName": "validateSchema",
+          "method": "POST",
+          "body": {
+            "sourceName": "@pipeline().parameters.sourceName",
+            "loadDate": "@formatDateTime(utcNow(), 'yyyy-MM-dd')"
+          }
+        }
+      },
+      {
+        "name": "Run_PySpark_Transform",
+        "type": "SynapseNotebook",
+        "dependsOn": [
+          {
+            "activity": "Run_Schema_Validation",
+            "dependencyConditions": ["Succeeded"]
+          }
+        ],
+        "typeProperties": {
+          "notebook": {
+            "referenceName": "nb_bronze_to_silver",
+            "type": "NotebookReference"
+          },
+          "parameters": {
+            "sourceName": {
+              "value": "@pipeline().parameters.sourceName",
+              "type": "string"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

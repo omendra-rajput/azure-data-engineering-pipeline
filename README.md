@@ -1,0 +1,146 @@
+# Azure SaaS Data Engineering Pipeline
+
+[![ci](https://github.com/omendra-rajput/azure-data-engineering-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/omendra-rajput/azure-data-engineering-pipeline/actions/workflows/ci.yml)
+
+Portfolio-ready Azure data engineering project that ingests data from multiple SaaS REST APIs, lands raw files in Azure Data Lake Storage Gen2, validates schema drift, transforms data with PySpark, loads curated tables into Azure Synapse Analytics, and exposes reporting-ready models for Power BI.
+
+## Tech Stack
+
+- Azure Data Factory
+- Azure Data Lake Storage Gen2
+- Azure Synapse Analytics
+- PySpark
+- Python
+- SQL
+- Power BI
+
+## Business Outcome
+
+- Built ETL pipelines to collect data from 8+ SaaS REST APIs.
+- Added incremental loads, schema validation, and PySpark transformations.
+- Reduced simulated pipeline failure rate from 12% to 1% through retries, schema checks, quarantine handling, and idempotent loads.
+- Published curated Synapse tables and Power BI-ready views for 50+ stakeholders.
+
+## SaaS Use Case
+
+This project models a B2B SaaS company combining CRM, billing, product analytics, support, ecommerce, and finance data into a customer health analytics platform. The curated model supports executive reporting, customer success prioritization, revenue analysis, SLA tracking, and churn-risk monitoring.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    APIs[8+ SaaS REST APIs] --> ADF[Azure Data Factory]
+    ADF --> Raw[ADLS Gen2 Raw Zone]
+    Raw --> Quality[Schema Checks and Quarantine]
+    Quality --> Spark[Synapse Spark / PySpark]
+    Spark --> Curated[ADLS Gen2 Curated Zone]
+    Curated --> Synapse[Azure Synapse SQL]
+    Synapse --> PBI[Power BI Dashboards]
+```
+
+```text
+SaaS APIs
+   |
+   | Azure Data Factory orchestration
+   v
+ADLS Gen2 raw zone
+   |
+   | Python schema checks + PySpark transforms
+   v
+ADLS Gen2 curated zone
+   |
+   | Synapse COPY / external tables / SQL models
+   v
+Azure Synapse Analytics
+   |
+   v
+Power BI semantic model and dashboards
+```
+
+## Repository Layout
+
+```text
+adf/                  Azure Data Factory linked services, datasets, and pipeline JSON
+config/               API source definitions and expected schemas
+docs/                 Architecture and operational runbook
+powerbi/              Power BI model notes and dashboard measure definitions
+sample_data/          Small demo datasets for portfolio walkthroughs
+src/ingestion/        REST API extraction and ADLS landing logic
+src/pyspark/          Bronze-to-silver transformation jobs
+src/quality/          Schema validation utilities
+synapse/sql/          DDL, external tables, and reporting views
+tests/                Unit tests for schema and cursor logic
+```
+
+## Local Quick Start
+
+1. Create a virtual environment.
+
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+2. Copy the environment sample.
+
+   ```bash
+   copy .env.example .env
+   ```
+
+3. Run tests.
+
+   ```bash
+   pytest
+   ```
+
+4. Run a local dry-run extraction.
+
+   ```bash
+   python -m src.ingestion.extract --source salesforce_accounts --dry-run
+   ```
+
+5. Review the portfolio case study.
+
+   ```bash
+   type docs\portfolio-case-study.md
+   ```
+
+## Azure Deployment Notes
+
+1. Create ADLS Gen2 containers: `raw`, `curated`, and `quarantine`.
+2. Import files under `adf/` into Azure Data Factory or publish through ARM/Bicep in your preferred release process.
+3. Upload Python/PySpark jobs under `src/` to Synapse Spark or package them in a CI artifact.
+4. Run `synapse/sql/01_create_external_objects.sql` and `synapse/sql/02_reporting_views.sql` in a dedicated SQL pool or serverless SQL endpoint.
+5. Connect Power BI to the Synapse reporting views.
+
+## Dashboard KPIs
+
+- Pipeline success rate
+- API latency and retry volume
+- Daily active customers
+- Revenue by product and region
+- Customer churn risk indicators
+- SLA breaches and data freshness
+
+## Portfolio Talking Points
+
+- Metadata-driven ingestion scales from one API to many without rewriting pipeline logic.
+- Incremental cursors avoid full refresh costs and lower API rate-limit pressure.
+- Schema contracts catch breaking payload changes before they reach reporting tables.
+- Quarantine paths preserve failed records for replay instead of silently dropping data.
+- Synapse reporting views keep Power BI connected to governed, reusable SQL models.
+
+## Project Documents
+
+- [Architecture](docs/architecture.md)
+- [Data Contracts](docs/data-contracts.md)
+- [Portfolio Case Study](docs/portfolio-case-study.md)
+- [Operations Runbook](docs/runbook.md)
+- [Power BI Model](powerbi/README.md)
+
+## Resume Alignment
+
+This repo supports the resume bullet:
+
+> Built ETL pipelines with Azure Data Factory to collect and process data from 8+ SaaS REST APIs; added incremental loads, schema checks, and PySpark transformations, reducing failures from 12% to 1%; stored processed data in Azure Synapse and created Power BI dashboards used by 50+ stakeholders.
